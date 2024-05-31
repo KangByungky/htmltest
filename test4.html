@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <div style="display: inline; position: relative;">
+            <!-- Token0 입력 필드 -->
+            <input type="text" placeholder="Token0" id="token0Input"/>
+            <!-- 드롭다운 버튼 -->
+            <button id="dropdownButton" onclick="toggleDropdown()">▼</button>
+    
+            <!-- 드롭다운 목록 -->
+            <ul id="dropdownMenu" style="display: none; position: absolute; top: 100%; left: 156px; background-color: white; border: 1px solid #ccc; padding: 0; list-style: none; margin: 0; z-index: 100;">
+                <li><a href="#" onclick="handleOption('edit')">edit</a></li>
+                <li><a href="#" onclick="handleOption('delete')">delete</a></li>
+                <li><a href="#" onclick="handleOption('options')">options</a></li>
+            </ul>
+        </div>
+    
+        <div style="display: inline; position:relative; left:30px;">
+            <input type="text" placeholder="Selected-Token1"/>
+        </div>
+        <br/><br/>
+        <div class="token" onclick="toggleToken()">Token_Toggle</div>
+        <div style="display: inline; position:relative; left:50px;">
+            <input type="text" placeholder="Selected-Token2"/>
+        </div>
+        <div>
+            Tokens are elaborated elsewhere
+        </div>
+    </div>
+    
+    <script>
+    function toggleDropdown() {
+        // 드롭다운 목록의 표시 여부를 토글합니다.
+        const dropdown = document.getElementById('dropdownMenu');
+        dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+    }
+    
+    function handleOption(option) {
+        // 선택한 옵션을 처리합니다.
+        alert('Selected option: ' + option);
+        // 드롭다운 메뉴를 숨깁니다.
+        document.getElementById('dropdownMenu').style.display = 'none';
+    }
+    
+    function toggleToken() {
+        var token = document.querySelector('.token');
+        if (token.textContent === '선택됨') {
+            token.textContent = '비선택됨';
+            token.style.backgroundColor = 'lightcoral';
+        } else {
+            token.textContent = '선택됨';
+            token.style.backgroundColor = 'lightgray';
+        }
+    }
+    </script>
+    
+</body>
+</html>

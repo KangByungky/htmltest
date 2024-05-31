@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>main2</title>
+    <script>
+        function handleChange(select) {
+            var selectedValue = select.value;
+            if (selectedValue === 'edit') {
+                editToken();
+            } else if (selectedValue === 'delete') {
+                deleteToken();
+            }
+        }
+
+        function editToken() {
+            alert('수정 액션을 수행합니다.');
+        }
+
+        function deleteToken() {
+            alert('삭제 액션을 수행합니다.');
+        }
+        
+        function sendRequest() {
+    // 요청에 보낼 데이터를 설정합니다.
+    const requestData = {
+        original: document.querySelector('select[name="Original"]').value,
+        gloss: document.querySelector('select[name="Gloss"]').value,
+        corpus: document.querySelector('input[type="text"][placeholder="The corpus insert textarea"]').value,
+        // 추가 데이터가 필요한 경우, 여기에 추가할 수 있습니다.
+    };
+
+    
+
+    // fetch API를 사용하여 서버로 POST 요청을 보냅니다.
+    fetch('http://localhost:56123/v1/glosses/annotate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json', // 요청의 Content-Type을 지정합니다.
+        },
+        body: JSON.stringify(requestData), // 요청 데이터를 JSON 형식으로 직렬화합니다.
+    })
+    .then(response => {
+        // 서버로부터의 응답을 JSON 형식으로 파싱합니다.
+        return response.json();
+    })
+    .then(data => {
+        // 서버 응답을 처리합니다.
+        console.log('응답 데이터:', data);
+        alert(`Server Response: ${data.message}`); // 예시로 응답 메시지를 alert 창으로 표시합니다.
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error : Error occurred while sending request.');
+    });
+}
+
+    </script>
+</head>
+<body>
+    <div style="font-size: 30px;">
+        <b>Glossy Snake</b>
+    </div>
+    <a href="C:\Users\NT900X3N\Desktop\htmltest\test2.html">
+        Login
+    </a>
+    <br/><br/>
+    <div class="requestbox">
+        <div>
+            <div style="font-size:25px;">
+                <b>Requset to the server</b>
+            </div>
+            <hr style="float:left; width:200px; height:1px;"/><br/>
+        </div>
+        <div style="display:inline;">
+            Endpoint <input style="border:none; position:relative; left:130px;" type="text" placeholder="http://"/>
+            <br/><hr style="float:left; width:200px; height:1px;"/>
+        </div>
+        <div>
+            <div>
+                <br/><b>Languages</b>
+            </div>            
+            <hr style="float:left; width:200px; height:1px;"/><br/>
+            <div style="display:inline;">
+                Original
+                <form style="display:inline; position:relative; left:140px;">
+                    <select name="Original" >
+                      <option value="english" selected>english</option>
+                      <option value="korean">korean</option>
+                      <option value="chinese">chinese</option>
+                      <option value="spanish">spanish</option>
+                    </select>
+                  </form>
+            </div><br/>
+            <div style="display:inline;">
+                Gloss
+                <form style="display:inline; position:relative; left:158px;">
+                    <select name="Gloss" >
+                      <option value="english">english</option>
+                      <option value="korean" selected>korean</option>
+                      <option value="chinese">chinese</option>
+                      <option value="spanish">spanish</option>
+                    </select>
+                  </form>
+            </div>
+            <br/><hr style="float:left; width:200px; height:1px;"/>
+        </div>
+        <div>
+            <div>
+                <br/><b>Other Options</b>
+            </div>            
+            <hr style="float:left; width:200px; height:1px;"/><br/>
+            <div style="display:inline;">
+                P. delimeter
+                <div style="display:inline; position: relative; left: 110px">
+                    <input type="radio" name="delimeter" checked="checked" /> <span class="up">\n</span>
+                    <input type="radio" name="delimeter"/> <span class="up">\\n</span>
+                </div>
+            </div>
+            <br/><hr style="float:left; width:200px; height:1px;"/>
+        </div>
+        <div>
+            <br/> corpus
+            <form style="display:inline">
+                <input style="width: 300px; height: 50px; position: relative; left: 150px" type="text" placeholder="The corpus insert textarea"/>
+            </form>
+        </div>
+        <div>
+            <br/>
+            <input type="button" value="Preview"/>
+        </div>
+        <div>
+            <input type="button" value="Request" onclick="sendRequest()"/>
+            
+        </div>
+    </div>
+    <br/>
+    <div class="jsonbox">
+        <div style="font-size:25px;">
+            <b>Upload a processed JSON</b>
+        </div>
+        <div>
+            <input type="button" value="Upload"/>
+        </div>
+    </div>
+    <br/>
+    <div>
+        <div class="warningbox">
+            WARNING: The backend returned an error(Only shown when an event occurs.)
+            <span onclick="this.parentElement.style.display='none'" class="close">✖</span>
+        </div>
+        <div class="shown3box">
+            -A message: These can be shown at most 3 at the same time
+            <span onclick="this.parentElement.style.display='none'" class="close">✖</span> 
+        </div>
+        <div class="scrollbox">
+            and more messages should be accessed via the scroll
+            <span onclick="this.parentElement.style.display='none'" class="close">✖</span>        
+        </div>
+    </div>
+    <br/>
+    <div class="outputbox">
+        <div style="font-size:25px;">
+            <b>Output</b>
+        </div>
+        <div>
+            <div style="display: inline">
+                <input type="button" value="Resend request"/>
+            </div>
+            <div style="display: inline; position:relative; left:90px;">
+                <input type="button" value="save"/>
+            </div>
+            <div style="display: inline; position:relative; left:237px;">
+                <input type="button" value="undo..."/>
+            </div>
+        </div>
+        <div>
+            <label><input type="checkbox" name="hidden token" value="hidden token">Show hidden tokens</label>
+            <br/><hr style="float:left; width:200px; height:1px;"/><br/>
+        </div>
+        <div>
+            <div style="display: inline; position: relative;">
+                <!-- Token0 입력 필드 -->
+                <input type="text" placeholder="Token0" id="token0Input"/>
+                <!-- 드롭다운 버튼 -->
+                <button id="dropdownButton" onclick="toggleDropdown()">▼</button>
+        
+                <!-- 드롭다운 목록 -->
+                <ul id="dropdownMenu" style="display: none; position: absolute; top: 100%; left: 156px; background-color: white; border: 1px solid #ccc; padding: 0; list-style: none; margin: 0; z-index: 100;">
+                    <li><a href="#" onclick="handleOption('edit')">edit</a></li>
+                    <li><a href="#" onclick="handleOption('delete')">delete</a></li>
+                    <li><a href="#" onclick="handleOption('options')">options</a></li>
+                </ul>
+            </div>    
+            <div style="display: inline; position:relative; left:30px;">
+                <input type="text" placeholder="Selected-Token1"/>
+            </div>
+            <br/><br/>
+            <br/><br/>
+            <br/><br/>
+            </div>
+                <div class="token" onclick="toggleToken()">Token_Toggle</div>
+                <script>
+                    function toggleToken() {
+                      var token = document.querySelector('.token');
+                      if (token.textContent === '선택됨')
+                      {
+                        token.textContent = '비선택됨';
+                        token.style.backgroundColor = 'lightcoral';
+                      }
+                      else
+                      {
+                        token.textContent = '선택됨';
+                        token.style.backgroundColor = 'lightgray';
+                      }
+                    }
+                </script>
+            <div style="display: inline; position:relative; left:50px;">
+                <input type="text" placeholder="Selected-Token2"/>
+            </div>
+            <div>
+                Tokens are elaborated elsewhere
+            </div>
+        </div>
+    </div>
+</body>
+
+<style>
+    .requestbox {
+        width: 600px;
+        padding: 1px;
+        border: 1px solid;
+    }
+    .jsonbox {
+        width: 350px;
+        padding: 1px;
+        border: 1px solid; 
+    }
+    .warningbox {
+        width: 600px;
+        padding: 1px;
+        border: 1px solid;
+        background-color:crimson;
+    }
+    .shown3box {
+        width: 500px;
+        padding: 1px;
+        border: 1px solid;
+    }
+    .scrollbox {
+        width: 420px;
+        padding: 1px;
+        border: 1px solid;
+    }
+    .outputbox {
+        width: 600px;
+        padding: 1px;
+        border: 1px solid;
+    }
+    .hover {
+        appearance: none;
+        border: 0px solid;
+    }
+</style>
+</html>

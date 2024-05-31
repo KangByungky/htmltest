@@ -1,0 +1,39 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function uploadCorpus() {
+            const requestData = {
+                corpus: document.querySelector('input[type="text"][placeholder="The corpus insert textarea"]').value,
+                original_text: document.querySelector('input[name="OriginalText"]').value,
+            };
+
+            fetch('http://test_api.py/api/v1/upload', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('응답 데이터:', data);
+                alert(`서버 응답: corpus_id - ${data.corpus_id}`);
+            })
+            .catch(error => {
+                console.error('에러:', error);
+                alert('에러: 요청을 보내는 동안 에러가 발생했습니다.');
+            });
+        }
+    </script>
+</head>
+<body>
+    <input type="text" placeholder="The corpus insert textarea"/>
+    <input type="hidden" name="OriginalText" value="A test string. Second sentence.&#10;Next paragraph. Another one.&#10;&#10;A paragraph after two newlines."/>
+    <input type="button" value="Upload Corpus" onclick="uploadCorpus()"/>
+</body>
+</html>

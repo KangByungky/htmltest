@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask Example</title>
+    <script>
+        function sendRequest() {
+            // 사용자가 입력한 텍스트를 가져옵니다.
+            const inputText = document.getElementById('input-text').value;
+            
+            // 백엔드로 POST 요청을 보냅니다.
+            fetch('http://localhost:5000/process', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*' // 모든 도메인에서의 요청을 허용
+                },
+                body: JSON.stringify({ text: inputText }),
+            })
+            .then(response => {
+                // 응답을 JSON 형식으로 파싱합니다.
+                return response.json();
+            })
+            .then(data => {
+                // 백엔드에서 받은 응답을 결과 칸에 표시합니다.
+                document.getElementById('output').textContent = data.result;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('요청 처리 중 오류가 발생했습니다.');
+            });
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <label for="input-text">텍스트 입력:</label>
+        <input type="text" id="input-text">
+        <button onclick="sendRequest()">실행</button>
+    </div>
+    <div>
+        <h2>결과:</h2>
+        <div id="output"></div> <!-- 결과가 표시될 영역 -->
+    </div>
+</body>
+</html>

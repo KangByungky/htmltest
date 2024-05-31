@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function handleChange(select) {
+            var selectedValue = select.value;
+            if (selectedValue === 'edit') {
+                editToken();
+            } else if (selectedValue === 'delete') {
+                deleteToken();
+            }
+        }
+
+        function editToken() {
+            alert('수정 액션을 수행합니다.');
+        }
+
+        function deleteToken() {
+            alert('삭제 액션을 수행합니다.');
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <form>
+            <select name="hover" onchange="handleChange(this)">
+                <option value="none">none</option>
+                <option value="edit">edit</option>
+                <option value="delete">delete</option>
+            </select>
+        </form>
+    </div>
+    
+</body>
+.hover {
+    appearance: none;
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 0px solid transparent;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+}
+.hover:hover {
+    appearance: none;
+    width: 0;
+    height: 0;
+    border-top: 15px solid #febe98;
+    border-bottom: 0px solid transparent;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    transition: 0.7s;
+}
+</html>
